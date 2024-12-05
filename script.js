@@ -15,6 +15,25 @@ const gradients = [
   "linear-gradient(135deg, #C79C6E, #B68C5B)"  // WARRIOR(GIGACHAD)  
 ];
 
+//emoteges
+const goodEmotes = [
+  "01HPRH2DT00000X4ZG70YHEZHT", // INSANE
+  "01F12P9KYG0009V7MP006J8KRF", // OhShit
+  "01GFW1BAK80001VXKTCH0VEANC", // HOLY
+  "01J5PXJXQG000CDPBQWFAR9ZR4", // WAHOO
+  "01HAGQA0VR000CK4GBCA21BZ37", // CutePog
+  "01HB7ZMVZR00072K8QAE93K1NP" // 83
+];
+
+const badEmotes = [
+  "01F777ZCRG0005BGS0Y3M78DZW", // ThisIsFine
+  "01F93Q2KQG00097B7MSQRESTYR", // FeelsWeakMan
+  "01GA9PTTXG0008XHFRJVH0QGND", // Panic
+  "01HAZXC0D0000EY75ATHMFBEV2", // Sadgies
+  "01F12PG1100009V7MP006J8KRJ", // GoodMeme
+  "01HJVX5W80000DCWCHPMG37J4A" // mfwMF
+];
+
 
 //generic function to shuffle an array, is for the colours
 function shuffleArray(array) {
@@ -25,20 +44,60 @@ function shuffleArray(array) {
 }
 
 // do the stuff xdd
-async function updateRanking() {
+async function updateRanking() {  
   try {
     const response = await fetch(API_URL);
     const data = await response.json();
+    const randomGoodEmoteIndex = Math.floor(Math.random() * goodEmotes.length);
+    const goodRandomEmoteUrl = `https://cdn.7tv.app/emote/${goodEmotes[randomGoodEmoteIndex]}/3x.webp`;
+    const randomBadEmoteIndex = Math.floor(Math.random() * badEmotes.length);
+    const badRandomEmoteUrl = `https://cdn.7tv.app/emote/${badEmotes[randomBadEmoteIndex]}/3x.webp`;
 
     
     data.sort((a, b) => b.subs - a.subs);
 
-    const totalSubs = data.reduce((acc, item) => acc + item.subs, 0);
+   
+    let naSubs = 0;
+    let euSubs = 0;
+    let nzSubs = 0;
 
+    
+    data.forEach(item => {
+      if (item.country === "NA") {
+        naSubs += item.subs;
+      } else if (item.country === "EU") {
+        euSubs += item.subs;
+      } else if (item.country === "NZ") {
+        nzSubs += item.subs;
+      }
+    });
+
+ 
+    let winningCountry = "";
+    let maxSubs = Math.max(naSubs, euSubs, nzSubs);
+
+    if (maxSubs === naSubs) {
+      winningCountry = "NA";
+    } else if (maxSubs === euSubs) {
+      winningCountry = "EU";
+    } else if (maxSubs === nzSubs) {
+      winningCountry = "NZ";
+    }
+
+   
+    const winningHeader = document.querySelector(".winning");
+    if(winningCountry !== "NA"){
+      winningHeader.innerHTML = `${winningCountry} IS WINNING <img src="${badRandomEmoteUrl}" alt="Emote" style="vertical-align: middle;">`;
+    }else{
+      winningHeader.innerHTML = `${winningCountry} IS WINNING <img src="${goodRandomEmoteUrl}" alt="Emote" style="vertical-align: middle;">`;
+    }
+    
+
+   
+    const totalSubs = data.reduce((acc, item) => acc + item.subs, 0);
     const rankingDiv = document.getElementById("ranking");
     rankingDiv.innerHTML = "";
 
-    
     const header = document.createElement("div");
     header.classList.add("header");
     header.innerHTML = `
@@ -49,7 +108,6 @@ async function updateRanking() {
 
     shuffleArray(gradients);
 
-    
     data.forEach((item, index) => {
       const entryDiv = document.createElement("div");
       entryDiv.classList.add("entry");
@@ -97,7 +155,7 @@ async function updateRanking() {
       rankingDiv.appendChild(entryDiv);
     });
   } catch (error) {
-    console.error("Error fetching the data HAH:", error);
+    console.error("Error fetching the data:", error);
     const rankingDiv = document.getElementById("ranking");
     rankingDiv.innerHTML = `<div class="entry">Unable to load rankings</div>`;
   }
