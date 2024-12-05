@@ -12,9 +12,7 @@ const gradients = [
   "linear-gradient(135deg, #FFF468, #D8B92A)", // rogue
   "linear-gradient(135deg, #0070DD, #33A8FF)", // shammy
   "linear-gradient(135deg, #8788EE, #5A55B3)", // lock
-  "linear-gradient(135deg, #C79C6E, #B68C5B)"  // WARRIOR(GIGACHAD)
-
-  
+  "linear-gradient(135deg, #C79C6E, #B68C5B)"  // WARRIOR(GIGACHAD)  
 ];
 
 

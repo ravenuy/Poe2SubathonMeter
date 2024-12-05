@@ -95,8 +95,8 @@ body {
 
   .entry {
     display: flex;
-    justify-content: space-between; /* Space between items */
-    align-items: center; /* Align items vertically */
+    justify-content: space-between; 
+    align-items: center; 
     padding: 10px 20px;
     position: relative;
     height: 50px;
@@ -110,8 +110,8 @@ body {
   
   .name {
     display: flex;
-    align-items: center; /* Align flag and name text vertically */
-    margin-right: auto; /* Ensure it sticks to the left */
+    align-items: center; 
+    margin-right: auto; 
     font-weight: bold;
     color: white;
     z-index: 999;
@@ -125,7 +125,7 @@ body {
   
   .subs {
     font-weight: bold;
-    color: #ffdd57; /* Yellow color */
+    color: #ffdd57; 
     z-index: 999;
   }
   
