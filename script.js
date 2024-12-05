@@ -32,11 +32,15 @@ async function updateRanking() {
     const response = await fetch(API_URL);
     const data = await response.json();
 
+    
+    data.sort((a, b) => b.subsPerHour - a.subsPerHour);
+
     const totalSubs = data.reduce((acc, item) => acc + item.subsPerHour, 0);
 
     const rankingDiv = document.getElementById("ranking");
     rankingDiv.innerHTML = "";
 
+    
     const header = document.createElement("div");
     header.classList.add("header");
     header.innerHTML = `
@@ -47,6 +51,7 @@ async function updateRanking() {
 
     shuffleArray(gradients);
 
+    
     data.forEach((item, index) => {
       const entryDiv = document.createElement("div");
       entryDiv.classList.add("entry");
@@ -58,7 +63,7 @@ async function updateRanking() {
       overlay.style.width = `${percentage}%`;
 
       if (item.name === "CuteDog_") {
-        overlay.style.background = "linear-gradient(135deg, #69CCF0, #2C88D1)"; //blue color requested by cd peepoCute
+        overlay.style.background = "linear-gradient(135deg, #69CCF0, #2C88D1)"; // blue color for CuteDog_
       } else {
         const randomGradient = gradients[index % gradients.length];
         overlay.style.background = randomGradient;
@@ -70,25 +75,21 @@ async function updateRanking() {
         entryDiv.classList.add("glass-effect");
       }
 
-      
       const flagImg = document.createElement("img");
       if (item.country === "NA") {
-        flagImg.src = "https://flagcdn.com/w320/us.png";  
+        flagImg.src = "https://flagcdn.com/w320/us.png";
         flagImg.alt = "NA Flag";
         flagImg.classList.add("flag");
       } else if (item.country === "EU") {
-        flagImg.src = "https://flagcdn.com/w320/eu.png";  
+        flagImg.src = "https://flagcdn.com/w320/eu.png";
         flagImg.alt = "EU Flag";
         flagImg.classList.add("flag");
-      }else if (item.country === "NZ") {
-        flagImg.src = "https://flagcdn.com/w320/nz.png";  
+      } else if (item.country === "NZ") {
+        flagImg.src = "https://flagcdn.com/w320/nz.png";
         flagImg.alt = "NZ Flag";
         flagImg.classList.add("flag");
       }
 
-      entryDiv.innerHTML += `
-        <span class="rank">${index + 1}</span>
-      `;      
       entryDiv.appendChild(flagImg);
       entryDiv.innerHTML += `
         <span class="name">${item.name}</span>
@@ -98,13 +99,11 @@ async function updateRanking() {
       rankingDiv.appendChild(entryDiv);
     });
   } catch (error) {
-    console.error("Error fetching subscriber data:", error);
+    console.error("Error fetching the data HAH:", error);
     const rankingDiv = document.getElementById("ranking");
     rankingDiv.innerHTML = `<div class="entry">Unable to load rankings</div>`;
   }
 }
 
-
 updateRanking();
-//update in case used in obs
 setInterval(updateRanking, 60000);
