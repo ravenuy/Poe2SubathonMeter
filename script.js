@@ -33,9 +33,9 @@ async function updateRanking() {
     const data = await response.json();
 
     
-    data.sort((a, b) => b.subsPerHour - a.subsPerHour);
+    data.sort((a, b) => b.subs - a.subs);
 
-    const totalSubs = data.reduce((acc, item) => acc + item.subsPerHour, 0);
+    const totalSubs = data.reduce((acc, item) => acc + item.subs, 0);
 
     const rankingDiv = document.getElementById("ranking");
     rankingDiv.innerHTML = "";
@@ -56,7 +56,7 @@ async function updateRanking() {
       const entryDiv = document.createElement("div");
       entryDiv.classList.add("entry");
 
-      const percentage = (item.subsPerHour / totalSubs) * 100;
+      const percentage = (item.subs / totalSubs) * 100;
 
       const overlay = document.createElement("div");
       overlay.classList.add("overlay");
@@ -93,7 +93,7 @@ async function updateRanking() {
       entryDiv.appendChild(flagImg);
       entryDiv.innerHTML += `
         <span class="name">${item.name}</span>
-        <span class="subs">${item.subsPerHour}</span>
+        <span class="subs">${item.subs}</span>
       `;
 
       rankingDiv.appendChild(entryDiv);
