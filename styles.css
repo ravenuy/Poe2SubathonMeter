@@ -204,8 +204,7 @@ body {
 }
 
 .shaper {
-  background: gray url(shaper.png) repeat 0 0;
-  -webkit-animation: slide 200s linear infinite;
+ background-color: black;
 }
 
 .shade {
@@ -218,15 +217,22 @@ body {
   background-image: linear-gradient(to right, rgba(34, 42, 51, 1) 5%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 60%, rgba(34, 42, 51, 1) 95%);
 }
 
-
-.winning {
+.winning {  
   padding-top: 30px;
   background: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
   background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent; /* Keeps gradient visible through text */
   display: inline;
-  color: transparent;
   background-size: 200% 100%; 
   animation: animatedText 5s linear infinite; 
+
+  /* Add glow without interfering */
+  text-shadow: 
+    0 0 25px rgba(255, 255, 255, 0.5), 
+    0 0 50px rgba(255, 255, 255, 0.6),
+    0 0 70px rgba(255, 0, 255, 0.8), 
+    0 0 90px rgba(255, 0, 255, 1);
 }
 
 @keyframes animatedText {
